@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Simple Sidebar - Start Bootstrap Template</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Custom styles for this template -->
+  <link href="css/simple-sidebar.css" rel="stylesheet">
+      <script type="text/javascript">
+  document.addEventListener('DOMContentLoaded', (event) => {
+
+    function getNotificationData() {
+      //This code will show awailable notifications
+      const apiUrl = 'https://e-scholarapis.herokuapp.com/notification'// site that doesn’t send Access-Control-*
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      fetch(proxyurl + apiUrl, {
+        method: 'GET',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": 'application/json',
+        }
+      }) // https://cors-anywhere.herokuapp.com/https://example.com
+        .then(response => response.text())
+        .then(contents => {
+          console.log(`success  ${contents}`);
+          var obj = JSON.parse(contents);
+          var notification = document.querySelector('#notification')
+
+          for (j = 0; j < obj.data.length; j++) {
+            var parentDiv = document.createElement("div");
+            var div1 = document.createElement("div");
+            div1.innerHTML = obj.data[j].title;
+            parentDiv.appendChild(div1);
+            var div2 = document.createElement("div");
+            var i1 = document.createElement("i");
+            i1.setAttribute("class", 'fa fa-trash');
+            div2.appendChild(i1);
+            var i2 = document.createElement("i");
+            i2.setAttribute("class", 'fa fa-edit');
+            div2.appendChild(i2);
+            parentDiv.appendChild(div2);
+            notification.appendChild(parentDiv);
+
+          }
+        }).catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+    }
+
+    document.querySelector("#addNotification").addEventListener('click',() =>{
+      const title = document.querySelector('#title').value;
+      const url = document.querySelector('#url').value;
+      if(!title && !url ){
+        document.querySelector("#failedMessage").innerHTML = "Please provide some inputs";
+        return;
+      }
+      const data = {'title':title,'url':url}
+      const apiUrl = 'https://e-scholarapis.herokuapp.com/notification'// site that doesn’t send Access-Control-*
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      fetch(proxyurl + apiUrl, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Content-Type': 'application/json',
+          "Accept": 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response =>response.text())
+      .then(contents => {
+        // var obj = JSON.parse(contents);
+        // var notification = document.querySelector('#notification')
+        document.querySelector("#successMessage").innerHTML = "Data Entered Successfully";
+        
+      }).catch(() => console.log("Can’t access " + url + " response. Blocked by browser?"))
+
+      getNotificationData();
+    });
+    getNotificationData();  
+  });     
+      </script>
+      <style>
+        #notification div{
+          display: flex;
+          justify-content: space-between;
+        }
+      </style>
+
+</head>
+
+<body>
+
+  <div class="d-flex" id="wrapper">
+
+    <!-- Sidebar -->
+    <div class="bg-light border-right" id="sidebar-wrapper">
+      <div class="sidebar-heading">Start Bootstrap </div>
+      <div class="list-group list-group-flush">
+        <a href="#" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Overview</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Events</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+      </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="container-fluid">
+        <div class="text-center">
+          <h1>Notifications</h1>
+          <p id="successMessage" class=" text-success"></p>
+          <p id="failedMessage" class="text-danger"></p>
+        </div>
+    
+          <div class="form-group">
+            <input type="text" class="form-control" id="title" placeholder="title">
+          </div>
+          <div class="form-group">
+            <input id="url" type="text" class="form-control" placeholder="url">
+          </div>
+          <button id="addNotification" class="btn btn-primary">Submit</button>
+       
+
+        <hr>
+        <div id="notification">
+    
+        </div>
+      </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+
+  </div>
+  <!-- /#wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Menu Toggle Script -->
+  <script>
+    $("#menu-toggle").click(function(e) {
+      e.preventDefault();
+      $("#wrapper").toggleClass("toggled");
+    });
+  </script>
+
+</body>
+
+</html>
