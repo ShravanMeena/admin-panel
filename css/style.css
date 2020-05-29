@@ -5,6 +5,9 @@
   padding-right: 40px;
   line-height: 40px;
 }
+#updateNotification {
+  display: none;
+}
 @media only screen and (max-width: 768px) {
   .shadow {
     margin-top: 30px;
