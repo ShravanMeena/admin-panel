@@ -13,129 +13,15 @@
 
     <!-- Bootstrap core CSS -->
     <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <!-- Custom styles for this template -->
     <link href="css/simple-sidebar.css" rel="stylesheet" />
-    <script type="text/javascript">
-      document.addEventListener("DOMContentLoaded", (event) => {
-        function getNotificationData() {
-          //This code will show awailable notifications
-          const apiUrl = "https://e-scholarapis.herokuapp.com/notification"; // site that doesn’t send Access-Control-*
-          const proxyurl = "https://cors-anywhere.herokuapp.com/";
-          fetch(proxyurl + apiUrl, {
-            method: "GET",
-            mode: "cors",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-          }) // https://cors-anywhere.herokuapp.com/https://example.com
-            .then((response) => response.text())
-            .then((contents) => {
-              console.log(`success  ${contents}`);
-              var obj = JSON.parse(contents);
-              var notification = document.querySelector("#notification");
-
-              for (j = 0; j < obj.data.length; j++) {
-                var parentDiv = document.createElement("div");
-                var div1 = document.createElement("div");
-                div1.innerHTML = obj.data[j].title;
-                parentDiv.appendChild(div1);
-                var div2 = document.createElement("div");
-                var i1 = document.createElement("i");
-                i1.setAttribute("class", "fa fa-trash");
-                div2.appendChild(i1);
-                var i2 = document.createElement("i");
-                i2.setAttribute("class", "fa fa-edit");
-                div2.appendChild(i2);
-                parentDiv.appendChild(div2);
-                notification.appendChild(parentDiv);
-              }
-            })
-            .catch(() =>
-              console.log(
-                "Can’t access " + url + " response. Blocked by browser?"
-              )
-            );
-        }
-
-        document
-          .querySelector("#addNotification")
-          .addEventListener("click", () => {
-            const title = document.querySelector("#title").value;
-            const url = document.querySelector("#url").value;
-            if (!title && !url) {
-              document.querySelector("#failedMessage").innerHTML =
-                "Please provide some inputs";
-              return;
-            }
-            const data = { title: title, url: url };
-            const apiUrl = "https://e-scholarapis.herokuapp.com/notification"; // site that doesn’t send Access-Control-*
-            const proxyurl = "https://cors-anywhere.herokuapp.com/";
-            fetch(proxyurl + apiUrl, {
-              method: "POST",
-              mode: "cors",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              body: JSON.stringify(data),
-            })
-              .then((response) => response.text())
-              .then((contents) => {
-                // var obj = JSON.parse(contents);
-                // var notification = document.querySelector('#notification')
-                document.querySelector("#successMessage").innerHTML =
-                  "Data Entered Successfully";
-              })
-              .catch(() =>
-                console.log(
-                  "Can’t access " + url + " response. Blocked by browser?"
-                )
-              );
-
-            getNotificationData();
-          });
-        getNotificationData();
-      });
-    </script>
-    <style>
-      #notification div {
-        display: flex;
-        justify-content: space-between;
-        padding-left: 40px;
-        padding-right: 40px;
-      }
-      @media only screen and (max-width: 768px) {
-     
-      .shadow{
-        margin-top: 30px;
-        padding-bottom: 50px;
-        padding-top: 50px;
-        
-      }
-      }
-      .fa-trash {
-        font-size: 22px;
-        color: red;
-        margin-right: 12px;
-      }
-      .fa-edit {
-        font-size: 22px;
-        color: #157af6;
-      }
-      .Maintitle {
-        font-size: 30px;
-      }
-      .shadow{
-        margin-top: 30px;
-        padding-bottom: 50px;
-        padding-top: 50px;
-      }
-    </style>
+    <script src="js/script.js"></script>
+    <style></style>
   </head>
 
   <body>
@@ -144,16 +30,35 @@
       <div class="bg-light border-right" id="sidebar-wrapper">
         <div class="sidebar-heading">E-Scholor</div>
         <div class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action bg-light" >Dashboard</a
+          <a
+            href="carousel.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Add New Notifications</a
           >
-          <a href="#" class="list-group-item list-group-item-action bg-light">Shortcuts</a
+          <a
+            href="notification.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Add Carousel Images</a
           >
-          <a href="#" class="list-group-item list-group-item-action bg-light" >Overview</a
+          <a
+            href="courses.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Add New Courses</a
           >
-          <a href="#" class="list-group-item list-group-item-action bg-light"  >
-          <a href="#" class="list-group-item list-group-item-action bg-light" >Profile</a
+          <a
+            href="managementTeam.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Add New Students</a
           >
-          <a href="#" class="list-group-item list-group-item-action bg-light">Status</a
+          <a
+            href="students.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Add New Faculities</a
+          >
+          <a
+            href="faculties.html"
+            class="list-group-item list-group-item-action bg-light"
+            >Add Management Team</a
           >
         </div>
       </div>
@@ -183,7 +88,7 @@
                   type="text"
                   class="form-control"
                   id="title"
-                  placeholder="title"
+                  placeholder="Enter Notification Title Here"
                 />
               </div>
               <div class="form-group">
@@ -191,7 +96,7 @@
                   id="url"
                   type="text"
                   class="form-control"
-                  placeholder="url"
+                  placeholder="Enter Notifications URL Here"
                 />
               </div>
               <button id="addNotification" class="btn btn-primary">

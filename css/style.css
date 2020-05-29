@@ -1,0 +1,33 @@
+#notification div {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 40px;
+  padding-right: 40px;
+  line-height: 40px;
+}
+@media only screen and (max-width: 768px) {
+  .shadow {
+    margin-top: 30px;
+    padding-bottom: 50px;
+    padding-top: 50px;
+  }
+}
+.fa-trash {
+  font-size: 22px !important;
+  color: red;
+  margin-right: 18px;
+  cursor: pointer;
+}
+.fa-edit {
+  font-size: 22px !important;
+  color: #157af6;
+  cursor: pointer;
+}
+.Maintitle {
+  font-size: 30px;
+}
+.shadow {
+  margin-top: 30px;
+  padding-bottom: 50px;
+  padding-top: 50px;
+}
